@@ -2,25 +2,27 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>منصة التجويد الشاملة | Tajwid Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#E0F7FA">
+    <title>منصة التجويد للأطفال | Tajwid Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Fredoka:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- KID-FRIENDLY PALETTE (Light Mode) --- */
-            --bg-primary: #E0F7FA;      /* Soft Light Blue Background */
-            --bg-secondary: #B2EBF2;    /* Slightly darker blue for containers */
-            --primary: #0288D1;         /* Friendly Blue for text/headers */
-            --accent: #FF9800;          /* Orange for actions/stars */
-            --surface: #FFFFFF;         /* Pure white for cards */
-            --surface-border: #81D4FA;  /* Soft border */
-            --text-main: #37474F;       /* Dark Grey text (softer than black) */
+            /* --- KID-FRIENDLY PALETTE --- */
+            --bg-primary: #E0F7FA;
+            --bg-secondary: #B2EBF2;
+            --primary: #0288D1;
+            --accent: #FF9800;
+            --surface: #FFFFFF;
+            --surface-border: #81D4FA;
+            --text-main: #37474F;
             --text-dim: #90A4AE;
-            --success: #66BB6A;         /* Green */
+            --success: #66BB6A;
             
             /* --- FONTS --- */
             --font-ar: 'Tajawal', sans-serif;
-            --font-fun: 'Fredoka', sans-serif; /* Used for decorative elements */
+            --font-fun: 'Fredoka', sans-serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -28,7 +30,6 @@
         body {
             margin: 0; 
             background-color: var(--bg-primary);
-            /* Playful Dot Pattern */
             background-image: radial-gradient(var(--surface-border) 2px, transparent 2px);
             background-size: 40px 40px;
             color: var(--text-main); 
@@ -36,6 +37,7 @@
             min-height: 100vh;
             display: flex; flex-direction: column;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .hidden { display: none !important; }
@@ -46,13 +48,12 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* --- BUTTONS (Tactile & Bouncy) --- */
+        /* --- BUTTONS --- */
         .btn {
             background: var(--primary);
             color: white; border: none; padding: 16px 40px; 
             border-radius: 50px; font-family: var(--font-ar); font-weight: 900; 
             font-size: 1.2rem; cursor: pointer; 
-            /* 3D Effect */
             box-shadow: 0 6px 0 #01579B, 0 10px 10px rgba(0,0,0,0.1); 
             transition: all 0.1s; width: 100%; max-width: 320px;
             position: relative; top: 0;
@@ -131,17 +132,37 @@
         }
         .card-icon { font-size: 3rem; position: relative; z-index: 1; display: block; margin-bottom: 5px;}
 
+        /* --- PROGRESS BADGE --- */
+        .completed-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FFD700;
+            color: #FFF;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            animation: popBadge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid white;
+        }
+        @keyframes popBadge { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
         /* --- LESSON VIEW --- */
         #lesson-view { flex: 1; display: flex; flex-direction: column; padding: 20px; background: #FAFAFA; overflow: hidden; position: relative;}
         .lesson-header { display: flex; align-items: center; margin-bottom: 20px; justify-content: space-between; }
         
         .content-scroll { 
             flex: 1; overflow-y: auto; background: white; 
-            border-radius: 30px; padding: 30px; line-height: 2; font-size: 1.3rem; /* Larger text for kids */
+            border-radius: 30px; padding: 30px; line-height: 2; font-size: 1.3rem; 
             color: #455A64;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.03); border: 2px solid #E3F2FD;
         }
-        /* Styling the original content to look less intimidating */
         .content-scroll h2 { color: var(--primary); font-size: 1.8rem; border-bottom: 4px dashed var(--accent); padding-bottom: 15px; margin-top: 30px;}
         .content-scroll h3 { color: var(--accent); background: #FFF3E0; display: inline-block; padding: 5px 15px; border-radius: 15px; margin-top: 25px; font-size: 1.4rem;}
         .content-scroll ul { list-style: none; padding: 0; }
@@ -255,7 +276,7 @@
 <script>
 /* 
  * --------------------------------------------------------------------------
- * EXTENDED CONTENT DATA (90% Coverage) - KEPT EXACTLY AS PROVIDED
+ * CONTENT DATA (Unchanged Content)
  * --------------------------------------------------------------------------
  */
 
@@ -1025,29 +1046,88 @@ const PART_2_DATA = [
 
 const ALL_COURSES = [...PART_1_DATA, ...PART_2_DATA];
 
+/**
+ * Simple Audio Synthesizer to avoid external file dependencies.
+ * Generates beeps and chords using Web Audio API.
+ */
+const SoundEngine = {
+    ctx: null,
+    init: function() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+        }
+    },
+    playTone: function(freq, type, duration, vol = 0.1) {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + duration);
+    },
+    playClick: function() {
+        this.init();
+        // Short high tick
+        this.playTone(800, 'sine', 0.05, 0.05);
+    },
+    playCorrect: function() {
+        this.init();
+        // High ding
+        this.playTone(600, 'sine', 0.1, 0.1);
+        setTimeout(() => this.playTone(1200, 'sine', 0.3, 0.1), 100);
+    },
+    playWrong: function() {
+        this.init();
+        // Low buzz
+        this.playTone(150, 'sawtooth', 0.3, 0.1);
+    },
+    playWin: function() {
+        this.init();
+        // C Major Arpeggio
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((note, i) => {
+            setTimeout(() => this.playTone(note, 'sine', 0.4, 0.1), i * 150);
+        });
+    }
+};
+
 const App = {
     currentLessonId: null,
     currentQuestionIndex: 0,
     score: 0,
     activePart: 1,
     isProcessing: false,
-    
-    init: function() { this.loadScore(); },
-    loadScore: function() {
-        const saved = localStorage.getItem('tajwid_kids_score');
-        if (saved) { this.score = parseInt(saved) || 0; }
+    completedLessons: [],
+
+    init: function() { 
+        // NO LOADSCORE: Ensures 0 XP on refresh as requested.
+        // NO LOADPROGRESS: Ensures First Experience for everyone.
+        this.score = 0;
+        this.completedLessons = [];
+        this.updateScoreUI();
+    },
+
+    updateScoreUI: function() {
         document.getElementById('global-score').innerText = this.score;
     },
+
     addScore: function() {
         this.score += 10;
-        localStorage.setItem('tajwid_kids_score', this.score);
+        this.updateScoreUI();
         const scoreEl = document.getElementById('global-score');
         scoreEl.style.transform = "scale(1.5)";
         setTimeout(() => scoreEl.style.transform = "scale(1)", 200);
-        document.getElementById('global-score').innerText = this.score;
     },
+
     // --- NAVIGATION ---
     toDashboard: function() {
+        SoundEngine.playClick();
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('lesson-view').classList.add('hidden');
         document.getElementById('quiz-view').classList.add('hidden');
@@ -1055,12 +1135,15 @@ const App = {
         document.getElementById('dashboard-view').classList.add('fade-in');
         this.switchTab(1);
     },
+
     switchTab: function(part) {
+        SoundEngine.playClick();
         this.activePart = part;
         document.getElementById('tab-part1').className = part === 1 ? "tab active" : "tab";
         document.getElementById('tab-part2').className = part === 2 ? "tab active" : "tab";
         this.renderGrid();
     },
+
     renderGrid: function() {
         const grid = document.getElementById('course-grid');
         grid.innerHTML = "";
@@ -1073,8 +1156,12 @@ const App = {
             const icons = ['📖', '🌟', '🎯', '🧩', '🌙', '✨', '🕌', '🎓'];
             const randomIcon = icons[c.id % icons.length];
             
+            const isCompleted = this.completedLessons.includes(c.id);
+            const badgeHTML = isCompleted ? `<div class="completed-badge">⭐</div>` : '';
+            
             card.innerHTML = `
                 <div class="course-id">${c.id}</div>
+                ${badgeHTML}
                 <span class="card-icon">${randomIcon}</span>
                 <h3>${c.title}</h3>
             `;
@@ -1082,7 +1169,9 @@ const App = {
             grid.appendChild(card);
         });
     },
+
     openLesson: function(id) {
+        SoundEngine.playClick();
         this.currentLessonId = id;
         const lesson = ALL_COURSES.find(c => c.id === id);
         
@@ -1092,17 +1181,19 @@ const App = {
         
         document.getElementById('lesson-view-title').innerText = lesson.title;
         document.getElementById('lesson-content').innerHTML = lesson.content;
-        // Scroll to top
         document.getElementById('lesson-content').scrollTop = 0;
     },
+    
     backToLesson: function() {
+        SoundEngine.playClick();
         document.getElementById('results-modal').style.display = 'none';
         document.getElementById('quiz-view').classList.add('hidden');
         document.getElementById('lesson-view').classList.remove('hidden');
     },
+    
     startExam: function() {
         if (!this.currentLessonId) return;
-        
+        SoundEngine.playClick();
         document.getElementById('lesson-view').classList.add('hidden');
         document.getElementById('quiz-view').classList.remove('hidden');
         
@@ -1113,10 +1204,12 @@ const App = {
         this.updateProgressBar();
         this.renderQuestion();
     },
+
     updateProgressBar: function() {
         const pct = ((this.currentQuestionIndex) / 5) * 100;
         document.getElementById('quiz-bar').style.width = pct + '%';
     },
+
     renderQuestion: function() {
         const lesson = ALL_COURSES.find(c => c.id === this.currentLessonId);
         const q = lesson.questions[this.currentQuestionIndex];
@@ -1145,6 +1238,7 @@ const App = {
             </div>
         `;
     },
+
     checkAnswer: function(btn, isCorrect) {
         if (this.isProcessing) return; 
 
@@ -1154,6 +1248,7 @@ const App = {
 
         if (isCorrect) {
             btn.classList.add('correct');
+            SoundEngine.playCorrect();
             this.addScore();
             
             setTimeout(() => {
@@ -1169,6 +1264,7 @@ const App = {
 
         } else {
             btn.classList.add('wrong');
+            SoundEngine.playWrong();
             const correctBtn = document.querySelector('.option-btn[data-correct="true"]');
             if(correctBtn) correctBtn.classList.add('correct');
 
@@ -1180,11 +1276,19 @@ const App = {
             }, 1500);
         }
     },
+
     showResults: function() {
+        SoundEngine.playWin();
+        // Add to progress (Session only)
+        if (!this.completedLessons.includes(this.currentLessonId)) {
+            this.completedLessons.push(this.currentLessonId);
+        }
+        
         const modal = document.getElementById('results-modal');
         modal.style.display = 'flex';
         this.fireConfetti();
     },
+
     fireConfetti: function() {
         const colors = ['#f44336', '#2196F3', '#FFEB3B', '#4CAF50', '#FF9800'];
         for(let i=0; i<50; i++) {
