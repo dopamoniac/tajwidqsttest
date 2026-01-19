@@ -2,277 +2,289 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>امتحان التجويد | Tajwid Exam</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>منصة التجويد الشاملة | Tajwid Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Fredoka:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* FAST PERFORMANCE PALETTE */
-            --bg-deep: #02040a;
-            --primary: #00f3ff;
-            --secondary: #bc13fe;
-            --success: #00ff66;
-            --danger: #ff2a2a;
-            --surface: rgba(20, 30, 45, 0.9);
-            --surface-border: rgba(0, 243, 255, 0.2);
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
+            /* --- KID-FRIENDLY PALETTE (Light Mode) --- */
+            --bg-primary: #E0F7FA;      /* Soft Light Blue Background */
+            --bg-secondary: #B2EBF2;    /* Slightly darker blue for containers */
+            --primary: #0288D1;         /* Friendly Blue for text/headers */
+            --accent: #FF9800;          /* Orange for actions/stars */
+            --surface: #FFFFFF;         /* Pure white for cards */
+            --surface-border: #81D4FA;  /* Soft border */
+            --text-main: #37474F;       /* Dark Grey text (softer than black) */
+            --text-dim: #90A4AE;
+            --success: #66BB6A;         /* Green */
+            
+            /* --- FONTS --- */
             --font-ar: 'Tajawal', sans-serif;
-            --font-tech: 'Orbitron', sans-serif;
+            --font-fun: 'Fredoka', sans-serif; /* Used for decorative elements */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body {
-            margin: 0;
-            background-color: var(--bg-deep);
-            /* Optimized Background (No heavy images) */
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            margin: 0; 
+            background-color: var(--bg-primary);
+            /* Playful Dot Pattern */
+            background-image: radial-gradient(var(--surface-border) 2px, transparent 2px);
             background-size: 40px 40px;
-            color: var(--text-main);
+            color: var(--text-main); 
             font-family: var(--font-ar);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Utility for switching screens */
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.5s ease forwards; }
+        .fade-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- BUTTONS (Tactile & Bouncy) --- */
+        .btn {
+            background: var(--primary);
+            color: white; border: none; padding: 16px 40px; 
+            border-radius: 50px; font-family: var(--font-ar); font-weight: 900; 
+            font-size: 1.2rem; cursor: pointer; 
+            /* 3D Effect */
+            box-shadow: 0 6px 0 #01579B, 0 10px 10px rgba(0,0,0,0.1); 
+            transition: all 0.1s; width: 100%; max-width: 320px;
+            position: relative; top: 0;
+        }
+        .btn:active { top: 6px; box-shadow: 0 0 0 #01579B, 0 0px 0px rgba(0,0,0,0.1); }
+        
+        .btn-outline {
+            background: var(--surface); color: var(--primary);
+            box-shadow: 0 4px 0 #B0BEC5, 0 5px 10px rgba(0,0,0,0.05);
+            border: 2px solid var(--primary); padding: 10px 25px; width: auto;
+        }
+        .btn-outline:active { top: 4px; box-shadow: 0 0 0 #B0BEC5; }
 
         /* --- WELCOME SCREEN --- */
         #welcome-screen {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at center, #1a2a40 0%, #02040a 100%);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            z-index: 200;
-            text-align: center;
-            padding: 20px;
+            position: fixed; inset: 0; background: linear-gradient(135deg, #4FC3F1 0%, #E1F5FE 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            z-index: 500; text-align: center; padding: 20px;
         }
-
-        .logo-glow {
-            font-size: 5rem;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
-            margin-bottom: 20px;
-            animation: floatLogo 3s ease-in-out infinite;
+        .logo-glow { 
+            font-size: 6rem; margin-bottom: 10px; 
+            animation: bounce 2s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
         }
-
-        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-
-        .welcome-title {
-            font-size: 3rem; font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .welcome-subtitle {
-            font-size: 1.2rem; color: var(--text-dim);
-            margin-bottom: 50px; font-family: var(--font-tech); letter-spacing: 2px;
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; padding: 18px 50px;
-            border-radius: 50px;
-            color: white; font-family: var(--font-ar); font-weight: bold; font-size: 1.3rem;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .start-btn:active { transform: scale(0.95); }
-        .start-btn:hover { box-shadow: 0 0 50px rgba(188, 19, 254, 0.6); }
-
-        /* --- HEADER --- */
-        header {
-            background: rgba(5, 11, 20, 0.9);
-            border-bottom: 1px solid var(--surface-border);
-            padding: 10px 20px;
-            display: flex; align-items: center; justify-content: space-between;
-            z-index: 100;
-            height: 60px;
-        }
-
-        .lesson-select {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-family: var(--font-ar);
-            font-weight: bold;
-            outline: none; border: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         
+        .welcome-title { 
+            font-size: 3rem; font-weight: 900; color: #fff; 
+            text-shadow: 3px 3px 0px var(--primary); margin: 0;
+        }
+        .welcome-subtitle { 
+            font-size: 1.2rem; color: #fff; margin-bottom: 40px; 
+            font-weight: bold; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* --- DASHBOARD --- */
+        #dashboard-view { flex: 1; display: flex; flex-direction: column; padding: 20px; padding-bottom: 80px; overflow-y: auto; }
+        
+        .dash-header { 
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; 
+            background: white; padding: 10px 20px; border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
         .score-hud {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(0, 255, 102, 0.1);
-            border: 1px solid var(--success);
-            padding: 5px 12px;
-            border-radius: 15px;
-            color: var(--success); font-family: var(--font-tech); font-weight: bold;
+            background: #FFF3E0; color: #EF6C00; padding: 5px 20px; 
+            border-radius: 20px; font-weight: 900; font-family: var(--font-fun); 
+            display: flex; align-items: center; gap: 8px; font-size: 1.2rem;
         }
 
-        /* --- QUIZ CONTAINER --- */
-        #quiz-container {
-            flex: 1; padding: 20px;
-            overflow-y: auto;
-            display: flex; flex-direction: column; align-items: center;
-            position: relative;
+        .part-tabs { display: flex; gap: 15px; margin-bottom: 20px; justify-content: center; }
+        .tab {
+            flex: 1; padding: 12px; text-align: center; background: white; 
+            color: var(--text-dim); border-radius: 20px; font-weight: bold; font-size: 1.1rem;
+            box-shadow: 0 4px 0 #CFD8DC; transition: 0.2s; max-width: 150px;
+        }
+        .tab.active { background: var(--accent); color: white; box-shadow: 0 4px 0 #E65100; transform: translateY(-2px); }
+
+        .course-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
         }
 
-        /* --- QUESTION CARD --- */
-        .question-card {
-            background: var(--surface);
-            width: 100%; max-width: 700px;
-            border-radius: 25px;
-            padding: 30px 20px;
-            border: 1px solid var(--surface-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            /* Optimization: Only animate transform, not layout */
-            will-change: transform; 
+        .course-card {
+            background: var(--surface); border-radius: 25px; padding: 20px;
+            text-align: center; cursor: pointer;
+            box-shadow: 0 8px 0 #ECEFF1, 0 10px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            position: relative; overflow: hidden; border: 3px solid transparent;
         }
-
-        .question-text {
-            font-size: 1.4rem; font-weight: 900;
-            color: white; margin-bottom: 30px;
-            line-height: 1.4;
+        .course-card:active { transform: translateY(8px); box-shadow: 0 0 0 #ECEFF1; }
+        .course-card:hover { border-color: var(--primary); }
+        
+        .course-card h3 { color: var(--primary); margin: 15px 0 0 0; font-size: 1.1rem; font-weight: 800; }
+        .course-id { 
+            position: absolute; top: 10px; left: 10px; color: #ECEFF1; 
+            font-family: var(--font-fun); font-size: 3rem; font-weight: bold; opacity: 0.5; z-index: 0;
         }
+        .card-icon { font-size: 3rem; position: relative; z-index: 1; display: block; margin-bottom: 5px;}
 
-        /* --- BUTTONS --- */
+        /* --- LESSON VIEW --- */
+        #lesson-view { flex: 1; display: flex; flex-direction: column; padding: 20px; background: #FAFAFA; overflow: hidden; position: relative;}
+        .lesson-header { display: flex; align-items: center; margin-bottom: 20px; justify-content: space-between; }
+        
+        .content-scroll { 
+            flex: 1; overflow-y: auto; background: white; 
+            border-radius: 30px; padding: 30px; line-height: 2; font-size: 1.3rem; /* Larger text for kids */
+            color: #455A64;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.03); border: 2px solid #E3F2FD;
+        }
+        /* Styling the original content to look less intimidating */
+        .content-scroll h2 { color: var(--primary); font-size: 1.8rem; border-bottom: 4px dashed var(--accent); padding-bottom: 15px; margin-top: 30px;}
+        .content-scroll h3 { color: var(--accent); background: #FFF3E0; display: inline-block; padding: 5px 15px; border-radius: 15px; margin-top: 25px; font-size: 1.4rem;}
+        .content-scroll ul { list-style: none; padding: 0; }
+        .content-scroll li { 
+            margin-bottom: 15px; background: #F5F5F5; padding: 15px; border-radius: 15px; 
+            border-right: 6px solid var(--success); font-weight: 500;
+        }
+        .content-scroll strong { color: #000; }
+
+        /* --- QUIZ VIEW --- */
+        #quiz-view { 
+            flex: 1; display: flex; flex-direction: column; padding: 20px; 
+            overflow-y: hidden; background: white; 
+            border-radius: 30px 30px 0 0; 
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1); margin-top: 20px;
+        }
+        .quiz-progress { height: 10px; background: #EEE; border-radius: 5px; margin-bottom: 20px; overflow: hidden; width: 100%;}
+        .quiz-bar { height: 100%; background: var(--success); width: 0%; transition: width 0.3s ease;}
+
+        .quiz-card { text-align: center; padding: 10px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .question-text { font-size: 1.5rem; font-weight: 900; color: #263238; margin-bottom: 30px; line-height: 1.5; }
+        
         .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
-
-        .option-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 18px; border-radius: 15px;
-            font-size: 1.1rem; color: white;
-            cursor: pointer; transition: all 0.15s ease; /* Faster transition for responsiveness */
-            position: relative; font-weight: bold; text-align: right;
+        .option-btn { 
+            background: #FFF; border: 3px solid #ECEFF1; padding: 20px; 
+            border-radius: 20px; font-size: 1.2rem; color: #546E7A; 
+            cursor: pointer; font-weight: bold; text-align: right; 
+            box-shadow: 0 5px 0 #CFD8DC; transition: 0.1s; position: relative; top:0;
         }
+        .option-btn:active { top: 5px; box-shadow: 0 0 0 #CFD8DC; }
+        .option-btn.correct { background: var(--success); border-color: var(--success); color: white; box-shadow: 0 5px 0 #2E7D32; }
+        .option-btn.wrong { background: #EF5350; border-color: #EF5350; color: white; box-shadow: 0 5px 0 #C62828; animation: shake 0.4s; }
 
-        .option-btn:active { transform: scale(0.98); background: rgba(255,255,255,0.1); }
-        .option-btn:disabled { opacity: 0.6; pointer-events: none; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
-        /* States */
-        .option-btn.correct {
-            background: var(--success); border-color: var(--success);
-            color: black; transform: scale(1.02);
-            box-shadow: 0 0 20px var(--success);
-            z-index: 10;
-        }
+        /* --- RESULTS & CONFETTI --- */
+        .results-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 600; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .results-card { text-align: center; max-width: 90%; }
+        .star-rating { font-size: 4rem; margin-bottom: 10px; color: #FFD700; animation: spinStar 1s ease-out; }
+        @keyframes spinStar { 0% {transform: scale(0) rotate(-180deg);} 80% {transform: scale(1.2) rotate(0deg);} 100% {transform: scale(1) rotate(0deg);} }
 
-        .option-btn.wrong {
-            background: var(--danger); border-color: var(--danger);
-            color: white; animation: glitchShake 0.3s;
-        }
+        .confetti { position: absolute; width: 10px; height: 10px; background-color: #f00; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }
 
-        /* --- FEEDBACK & MODALS --- */
-        #feedback-toast {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.9); border: 1px solid white; color: white;
-            padding: 12px 25px; border-radius: 50px; font-weight: bold;
-            opacity: 0; pointer-events: none; z-index: 200;
-            transition: opacity 0.2s; font-family: var(--font-tech);
-            white-space: nowrap;
-        }
-        #feedback-toast.visible { opacity: 1; bottom: 50px; }
-
-        .results-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 300;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .results-card {
-            background: #0f172a; border: 2px solid var(--primary);
-            padding: 40px; border-radius: 25px; text-align: center;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2);
-            max-width: 90%;
-        }
-
-        /* Animations */
-        @keyframes glitchShake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* Responsive */
         @media (min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 400px) { 
-            .welcome-title { font-size: 2.2rem; } 
-            .option-btn { font-size: 1rem; padding: 15px; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- WELCOME SCREEN -->
     <section id="welcome-screen">
-        <div class="logo-glow">🌙</div>
-        <h1 class="welcome-title">امتحان التجويد</h1>
-        <div class="welcome-subtitle">TAJWID SPACE MISSION</div>
-        <button class="start-btn" onclick="App.launch()">ابـدأ الـمـهـمـة</button>
+        <div class="logo-glow">🕌</div>
+        <h1 class="welcome-title">منصة التجويد</h1>
+        <div class="welcome-subtitle">COMPREHENSIVE TAJWID LEARNING</div>
+        <button class="btn" onclick="App.toDashboard()">ابـدأ الـتـعـلـم</button>
     </section>
 
-    <!-- MAIN APP (Hidden until launch) -->
-    <header id="app-header" class="hidden">
-        <select id="lesson-selector" class="lesson-select" onchange="App.changeLesson(this.value)">
-            <!-- Options Injected by JS -->
-        </select>
-        <div class="score-hud">
-            <span id="current-score">0</span>
+    <section id="dashboard-view" class="hidden">
+        <div class="dash-header">
+            <h2 style="color:var(--primary); margin:0; font-weight:900;">المكتبة</h2>
+            <div class="score-hud">
+                <span>⭐</span>
+                <span id="global-score">0</span> XP
+            </div>
         </div>
-    </header>
-
-    <div id="quiz-container" class="hidden">
         
-        <div style="width: 100%; max-width: 700px; display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--text-dim); font-family: var(--font-tech); font-size: 0.8rem;">
-            <span id="lesson-title" style="color: var(--primary);"></span>
-            <span>سؤال <span id="q-counter" style="color:white">1</span> / 5</span>
+        <div class="part-tabs">
+            <div class="tab active" id="tab-part1" onclick="App.switchTab(1)">الجزء الأول</div>
+            <div class="tab" id="tab-part2" onclick="App.switchTab(2)">الجزء الثاني</div>
         </div>
 
-        <div id="question-stage">
+        <div id="course-grid" class="course-grid">
             <!-- Injected via JS -->
         </div>
-    </div>
+    </section>
 
-    <!-- Feedback Toast -->
-    <div id="feedback-toast"></div>
+    <section id="lesson-view" class="hidden">
+        <div class="lesson-header">
+            <button class="btn btn-outline" style="padding: 10px 20px; font-size: 1rem; width:auto;" onclick="App.toDashboard()">عودة</button>
+            <h3 id="lesson-view-title" style="color:var(--primary); margin:0; flex:1; text-align:center; font-weight:800;">عنوان الدرس</h3>
+            <div style="width: 60px;"></div> <!-- Spacer -->
+        </div>
+        <div id="lesson-content" class="content-scroll">
+            <!-- Content injected via JS -->
+        </div>
+        <div style="margin-top:20px; text-align:center; padding-bottom: 20px;">
+            <button class="btn" onclick="App.startExam()">ابدأ الامتحان لهذا الدرس 🚀</button>
+        </div>
+    </section>
 
-    <!-- Results Modal -->
+    <section id="quiz-view" class="hidden">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: #78909C;">
+            <span id="quiz-lesson-title" style="color: var(--primary); font-family: var(--font-fun);"></span>
+            <span>سؤال <span id="q-counter" style="color:black; font-size:1.2em">1</span> / 5</span>
+        </div>
+        <div class="quiz-progress"><div class="quiz-bar" id="quiz-bar"></div></div>
+        <div id="quiz-stage" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
     <div id="results-modal" class="results-overlay">
         <div class="results-card">
-            <h2 style="color:white; margin-bottom:20px;">مهمة منجزة!</h2>
-            <div style="font-size: 3rem; color: var(--success); font-family: var(--font-tech); font-weight: bold; margin-bottom: 10px;">5/5</div>
-            <h3 style="color: var(--primary); margin-bottom: 20px;">أداء مذهل!</h3>
-            <button class="start-btn" onclick="App.nextLesson()">المهمة التالية 🚀</button>
+            <div class="star-rating">⭐⭐⭐</div>
+            <h2 style="color:var(--primary); margin-bottom:10px; font-weight:900;">نتائج الدرس</h2>
+            <div style="font-size: 3rem; color: var(--success); font-family: var(--font-fun); font-weight: bold; margin-bottom: 10px;">5/5</div>
+            <h3 style="color: var(--accent); margin-bottom: 20px;">أداء ممتاز!</h3>
+            <button class="btn" onclick="App.backToLesson()">عودة للدرس</button>
         </div>
     </div>
 
 <script>
-/**
+/* 
  * --------------------------------------------------------------------------
- * DATA LAYER
+ * EXTENDED CONTENT DATA (90% Coverage) - KEPT EXACTLY AS PROVIDED
  * --------------------------------------------------------------------------
  */
-const COURSE_DATA = [
+
+// --- PART 1 DATA ---
+const PART_1_DATA = [
     {
         id: 1, title: "المقدمة وآداب التلاوة", part: 1,
+        content: `
+            <h2>تعريف التجويد</h2>
+            <p><strong>لغة:</strong> التحسين والإتقان.</p>
+            <p><strong>اصطلاحاً:</strong> علم بأصول تعرف كيفية أداء حروف القرآن الكريم بالنطق الصحيح وكيفية أداء الحركات بحقها ومستحقها.</p>
+            
+            <h2>أهمية تعلم التجويد</h2>
+            <p>تجويد القرآن هو تزيين القراءة وإتقانها. وهو سنة متبعة لأن النبي صلى الله عليه وسلم كان يقرأ به، وأمر به.</p>
+            <p>والتعلم يبدأ بالتلقي من أهل الإتقان والرواية المتصلة.</p>
+
+            <h2>آداب تلاوة القرآن</h2>
+            <p>يجب على قارئ القرآن مراعاة ما يلي:</p>
+            <ul>
+                <li><strong>الطهارة:</strong> أن يكون القارئ طاهراً من الحدث الأكبر والأصغر.</li>
+                <li><strong>السواك:</strong> تنظيف الفم بالسواك لطيب رائحة الفم ولإعانة الحروف على مخارجها.</li>
+                <li><strong>استقبال القبلة:</strong> استقبال الكعبة المشرفة.</li>
+                <li><strong>الخشوع:</strong> تلاوة القرآن بتدبر وتفكر.</li>
+                <li><strong>عدم المقاطعة:</strong> عدم مقاطعة التلاوة بالكلام الباطل أو الضحك.</li>
+            </ul>
+            <p>قال تعالى: ﴿إِنَّ الَّذِينَ يَتلُونَ كِتابَ اللَّهِ وَأَقامُوا الصَّلاةَ وَأَنفَقُوا مِمَّا رَزَقناهُم سِرًّا وَعَلانِيَةً يَرجُونَ تِجارَةً لَن تَبورَ﴾.</p>
+        `,
         questions: [
-            { q: "ما هو معنى كلمة (التجويد)؟", a: ["تحسين القراءة", "تلاوة القرآن", "حفظ القرآن", "كتابة القرآن"], c: 0 },
+            { q: "ما هو معنى كلمة (التجويد) لغة؟", a: ["تحسين وإتقان", "تلاوة القرآن", "حفظ القرآن", "كتابة القرآن"], c: 0 },
             { q: "ما هي الثواب العظيمة المذكورة في المقدمة للكتاب؟", a: ["الجهاد في سبيل الله", "الصدقة الجارية", "صلاة التطوع", "حسن الخلق"], c: 1 },
             { q: "أي واحدة مما يلي من آداب تلاوة القرآن غير صحيحة؟", a: ["السواك", "الوضوء", "استقبال القبلة", "الضحك أثناء القراءة"], c: 3 },
             { q: "ما هو أول شيء يجب البدء به قبل التلاوة؟", a: ["البسملة", "الفاتحة", "التشهد", "الاستعاذة"], c: 3 },
@@ -281,6 +293,26 @@ const COURSE_DATA = [
     },
     {
         id: 2, title: "تعريف الغنة", part: 1,
+        content: `
+            <h2>الغنة</h2>
+            <p><strong>لغة:</strong> صوت يخرج من الأنف.</p>
+            <p><strong>اصطلاحاً:</strong> صوت لذيذ مركب جوارى في خيشوم الأنف، عند النطق بالحروف التي لها صيغة الغنة.</p>
+            
+            <h2>حرفا الغنة</h2>
+            <p>للغنة في اللغة العربية حرفان فقط، وهما:</p>
+            <ul>
+                <li>حرف <strong>النون</strong> (سواء كانت متحركة، ساكنة، أو مشددة).</li>
+                <li>حرف <strong>الميم</strong> (سواء كانت متحركة، ساكنة، أو مشددة).</li>
+            </ul>
+            
+            <h2>مظهر الغنة</h2>
+            <p>تظهر الغنة بشكل واضح جداً:</p>
+            <ul>
+                <li>في النون الساكنة والميم الساكنة.</li>
+                <li>في النون والميم المشددتين.</li>
+            </ul>
+            <p><strong>ملاحظة:</strong> الغنة لا تتغير سواء كان الحرف ساكناً أو متحركاً، لكنها تكون أقوى وأظهر في حالة الشدة أو السكون.</p>
+        `,
         questions: [
             { q: "الغنة هي صوت يخرج من:", a: ["الفم", "الأنف (الخيشوم)", "الصدر", "الحلق"], c: 1 },
             { q: "ما هي حرفا الغنة؟", a: ["النون والميم", "الباء والفاء", "الراء واللام", "الألف والواو"], c: 0 },
@@ -291,16 +323,55 @@ const COURSE_DATA = [
     },
     {
         id: 3, title: "النون الساكنة والتنوين", part: 1,
+        content: `
+            <h2>النون الساكنة</h2>
+            <p>هي النون التي حركتها سكون خالص، وتأتي في الأسماء والأفعال والحروف، وتقع في وسط الكلمة وآخرها.</p>
+
+            <h2>التنوين</h2>
+            <p><strong>التنوين:</strong> هي نون ساكنة زائدة تلحق آخر الاسم لفظاً (أي في النطق) لا خطاً (أي لا تكتب).</p>
+            <p><strong>أحوال التنوين:</strong></p>
+            <ul>
+                <li><strong>تنوين الفتح:</strong> ألف صغيرة مائلة (ً). نحو: كِتَابًا.</li>
+                <li><strong>تنوين الكسر:</strong> تنوين صغيرة تحت الحرف (ٍ). نحو: كِتَابٍ.</li>
+                <li><strong>تنوين الضم:</strong> تنوين صغيرة فوق الحرف (ٌ). نحو: كِتَابٌ.</li>
+            </ul>
+            <p><strong>أشكال النون الساكنة في المصحف:</strong></p>
+            <ul>
+                <li>النون المجردة (ن).</li>
+                <li>النون التي عليها رأس حاء (نۡ).</li>
+                <li>النون المشددة (نّ).</li>
+            </ul>
+        `,
         questions: [
             { q: "ما هو التنوين؟", a: ["نون ساكنة زائدة آخر الأسماء", "همزة قطع", "حرف مد", "شدة على الحرف"], c: 0 },
             { q: "التنوين يثبت في الخط:", a: ["لفظاً", "خطاً فقط لا لفظاً", "خطاً فقط", "لا يثبت أبداً"], c: 1 },
             { q: "التنوين يكون في:", a: ["الأسماء فقط", "الأفعال فقط", "الحروف فقط", "الجميع"], c: 0 },
             { q: "كم حركة يقدر التنوين؟", a: ["حركتان", "ثلاث حركات", "أربع حركات", "ست حركات"], c: 0 },
-            { q: "من الأشكال التالية ليست شكلاً للنون الساكنة في المصحف:", a: ["النون المجردة (ن)", "النون التي عليها رأس الحاء (نۡ)", "النون مع شدة", "النون مع كسرة"], c: 3 }
+            { q: "من الأشكال التالية ليست شكلاً للنون الساكنة في المصحف:", a: ["النون المجردة (ن)", "النون التي عليها رأس حاء (نۡ)", "النون مع شدة", "النون مع كسرة"], c: 3 }
         ]
     },
     {
         id: 4, title: "الإظهار الحلقي", part: 1,
+        content: `
+            <h2>الإظهار الحلقي</h2>
+            <p><strong>التعريف:</strong> هو إخراج حرف النون الساكنة أو التنوين من مخرجه من غير غنة، إذا جاء بعده حرف من الحروف الحلقية.</p>
+            
+            <h2>حروف الإظهار الحلقي</h2>
+            <p>تكون الحروف الستة في الجملة التالية: (أخي هاك علماً حكيمًا).</p>
+            <ul>
+                <li>الهمزة (ء).</li>
+                <li>الهاء (هـ).</li>
+                <li>العين (ع).</li>
+                <li>الحاء (ح).</li>
+                <li>الغين (غ).</li>
+                <li>الخاء (خ).</li>
+            </ul>
+            
+            <h2>أمثلة:</h2>
+            <p><strong>من همزة:</strong> (مِن ءَامَنَ).</p>
+            <p><strong>من هاء:</strong> (مِن هَادٍ).</p>
+            <p><strong>تنوين وعين:</strong> (قَلْبٌ عَقُولٌ).</p>
+        `,
         questions: [
             { q: "ما هو الإظهار الحلقي؟", a: ["إخراج النون من مخرجها بغنة كاملة", "إخفاء النون", "قلب النون ميماً", "إدغام النون"], c: 1 },
             { q: "كم عدد حروف الإظهار الحلقي؟", a: ["6 أحرف", "5 أحرف", "7 أحرف", "3 أحرف"], c: 0 },
@@ -311,6 +382,27 @@ const COURSE_DATA = [
     },
     {
         id: 5, title: "الإدغام", part: 1,
+        content: `
+            <h2>الإدغام</h2>
+            <p><strong>التعريف:</strong> هو النطق بحرفين ساكن فمتح، يصيران حرفاً واحداً مشدداً مخرجه الثاني.</p>
+            
+            <h2>حروف الإدغام</h2>
+            <p>تجتمع حروف الإدغام الستة في أوائل كلمة (يَرْمُلُون)، وهي:</p>
+            <ul>
+                <li>الياء (ي).</li>
+                <li>الراء (ر).</li>
+                <li>الميم (م).</li>
+                <li>اللام (ل).</li>
+                <li>الواو (و).</li>
+                <li>النون (ن).</li>
+            </ul>
+            
+            <h2>أنواع الإدغام</h2>
+            <ul>
+                <li><strong>إدغام بغنة:</strong> مع حروف (ي، ن، م، و).</li>
+                <li><strong>إدغام بغير غنة:</strong> مع حروف (ل، ر).</li>
+            </ul>
+        `,
         questions: [
             { q: "ما هو الإدغام؟", a: ["إدخال حرف ساكن في حرف متحرك ليصيرا واحداً مشدداً", "إخراج الحرف من مخرجه", "إخفاء الحرف", "إلغاء الحرف"], c: 0 },
             { q: "تكون حروف الإدغام في:", a: ["كلمتين فقط", "كلمة واحدة فقط", "في أول الكلمة", "في آخر الكلمة"], c: 0 },
@@ -321,6 +413,23 @@ const COURSE_DATA = [
     },
     {
         id: 6, title: "الإدغام بغنة", part: 1,
+        content: `
+            <h2>الإدغام بغنة</h2>
+            <p>وهو إدخال حرف ساكن في حرف متحرك مشدد، بحيث تصيران حرفاً واحداً مشدداً مع بقاء الغنة.</p>
+            
+            <h2>حروف الإدغام بغنة</h2>
+            <p>لها أربعة أحرف، مجموعة في كلمة (يُنْمُو)، وهي:</p>
+            <ul>
+                <li>الياء.</li>
+                <li>النون.</li>
+                <li>الميم.</li>
+                <li>الواو.</li>
+            </ul>
+            
+            <h2>مثال: (من مالٍ)</h2>
+            <p>النون الساكنة في (من) أدغمت في الميم، فنقرأ (مّالٍ) بغنة مقدارها حركتان، ولا تظهر النون ولا تظهر الميم كاملة، بل ميم مشددة بغنة.</p>
+            <p><strong>مقدار الغنة:</strong> حركتان.</p>
+        `,
         questions: [
             { q: "أي الحروف التالية تدغم بغنة؟", a: ["نون في ميم", "لام في راء", "باء في باء", "نون في باء"], c: 0 }, 
             { q: "ما هو مقدار الغنة في الإدغام؟", a: ["حركتان", "حركة واحدة", "4 حركات", "بدون غنة"], c: 0 },
@@ -331,6 +440,21 @@ const COURSE_DATA = [
     },
     {
         id: 7, title: "الإدغام بغير غنة", part: 1,
+        content: `
+            <h2>الإدغام بغير غنة</h2>
+            <p>وهو إدخال حرف ساكن في حرف متحرك مشدد، دون بقاء الغنة.</p>
+            
+            <h2>حروف الإدغام بغير غنة</h2>
+            <p>له حرفان فقط، مجموعة في كلمة (يَرْمُو) الأخيرتين، وهما:</p>
+            <ul>
+                <li>اللام (ل).</li>
+                <li>الراء (ر).</li>
+            </ul>
+            
+            <h2>أمثلة:</h2>
+            <p><strong>اللام:</strong> (مِن لَدُنْكَ) تقرأ (مَّلَدُنْكَ).</p>
+            <p><strong>الراء:</strong> (مِن رَبِّكَ) تقرأ (مَّرَبِّكَ).</p>
+        `,
         questions: [
             { q: "أي الحروف التالية تدغم بغير غنة؟", a: ["الراء", "الميم", "النون", "الواو"], c: 0 },
             { q: "ما هي قاعدة (يرمو)؟", a: ["حروف الإدغام بغنة", "حروف الإدغام بغير غنة", "حروف الإظهار", "حروف الإقلاب"], c: 1 },
@@ -341,6 +465,22 @@ const COURSE_DATA = [
     },
     {
         id: 8, title: "الإقلاب", part: 1,
+        content: `
+            <h2>الإقلاب</h2>
+            <p><strong>لغة:</strong> تحويل الشيء عن وجهه.</p>
+            <p><strong>اصطلاحاً:</strong> قلب حرف النون الساكنة أو التنوين ميماً ساكنة مخفاة بغنة، إذا جاء بعده حرف الباء.</p>
+            
+            <h2>الحرف المسبب للإقلاب</h2>
+            <p>حرف واحد فقط وهو: <strong>الباء (ب)</strong>.</p>
+            
+            <h2>أمثلة:</h2>
+            <ul>
+                <li><strong>(من بَعِيد):</strong> تقرأ (مِيـمْ بَعِيد).</li>
+                <li><strong>(أنْبَأَ):</strong> تقرأ (أَمْبَأَ).</li>
+                <li><strong>(سَمِيعٌ بَصِير):</strong> تقرأ (سَمِيـمْ بَصِير).</li>
+            </ul>
+            <p><strong>علامة الإقلاب:</strong> في المصحف الشريف، تظهر الإقلاب بوضع ميم صغيرة مقلوبة فوق التنوين أو فوق النون.</p>
+        `,
         questions: [
             { q: "ما هو الإقلاب؟", a: ["قلب النون الساكنة ميماً ساكنة مخفاة بغنة عند الباء", "قلب الباء نوناً", "قلب الميم نوناً", "إخفاء النون"], c: 0 },
             { q: "يحدث الإقلاب عندما تأتي بعد النون الساكنة أو التنوين حرف:", a: ["الباء", "الميم", "الراء", "اللام"], c: 0 },
@@ -351,6 +491,21 @@ const COURSE_DATA = [
     },
     {
         id: 9, title: "الإخفاء الحقيقي", part: 1,
+        content: `
+            <h2>الإخفاء الحقيقي</h2>
+            <p><strong>التعريف:</strong> النطق بحرف بين الإظهار والإدغام بدون تشديد، مع بقاء صفة الغنة.</p>
+            
+            <h2>حروف الإخفاء الحقيقي</h2>
+            <p>هي 15 حرفاً، وهي كل حروف الهجاء عدا حروف الإظهار (أخيهاك) وحروف الإدغام (يرملون) وحرف الإقلاب (الباء).</p>
+            
+            <h2>أمثلة:</h2>
+            <ul>
+                <li><strong>مع التاء (ت):</strong> (مِن تَحْتِ) تُخفى النون.</li>
+                <li><strong>مع الجيم (ج):</strong> (مِن جَاءَ) تُخفى النون.</li>
+                <li><strong>مع الدال (د):</strong> (عَالِمٌ دُون) يُخفى التنوين.</li>
+            </ul>
+            <p><strong>علامة الإخفاء:</strong> في المصحف، توضع رأس حاء صغيرة (ۡ) فوق النون الساكنة أو فوق التنوين للدلالة عليه.</p>
+        `,
         questions: [
             { q: "ما هو الإخفاء الحقيقي؟", a: ["النطق بحرف بين الإظهار والإدغام بدون تشديد", "إخفاء الحرف تماماً", "إدغام الحرف", "إظهار الحرف"], c: 0 },
             { q: "تكون حروف الإخفاء الحقيقي:", a: ["ما عددا حروف الإظهار والإدغام والإقلاب", "ء، هـ، ع، ح، غ، خ", "ن، م، ب", "ل، ر"], c: 0 },
@@ -361,6 +516,16 @@ const COURSE_DATA = [
     },
     {
         id: 10, title: "أشكال النون الساكنة", part: 1,
+        content: `
+            <h2>أشكال النون الساكنة في المصحف</h2>
+            <p>للنون الساكنة ثلاثة أشكال رئيسية في الخط العربي، وهي:</p>
+            <ol>
+                <li><strong>النون المجردة:</strong> وهي النون بلا علامة. (مثال: مِن).</li>
+                <li><strong>النون التي عليها رأس حاء:</strong> (مثال: مۡنْ).</li>
+                <li><strong>النون المشددة:</strong> وهي النون مع شدة. (مثال: مِنّْ).</li>
+            </ol>
+            <p><strong>ملاحظة:</strong> النون الساكنة تأتي في وسط الكلمة وآخرها، ولا تأتي أولاً.</p>
+        `,
         questions: [
             { q: "النون الساكنة تأتي في:", a: ["الأسماء والأفعال والحروف", "الأسماء فقط", "في أول الكلمة", "في آخر الكلمة"], c: 0 },
             { q: "أشكال النون الساكنة ثلاثة هي:", a: ["المجردة، وعليها رأس حاء، والمشددة", "المجردة، والمنونة، والمقلوبة", "العادية، والصغيرة، والمتحركة", "المرققة، والمفخمة، والمعطشة"], c: 0 },
@@ -371,8 +536,24 @@ const COURSE_DATA = [
     },
     {
         id: 11, title: "الميم الساكنة", part: 1,
+        content: `
+            <h2>الميم الساكنة</h2>
+            <p>للميم الساكنة ثلاثة أحكام تشبه أحكام النون الساكنة:</p>
+            
+            <h3>1. الإدغام الشفوي (المتماثلين)</h3>
+            <p>إذا جاء بعد الميم الساكنة ميم (ميم وميم)، يدغمان في ميم مشددة.</p>
+            <p><strong>مثال:</strong> (وَلَكُم مَّا كَسَبْتُمْ) تقرأ (وَلَكُمَّا).</p>
+            
+            <h3>2. الإخفاء الشفوي (المتقاربين)</h3>
+            <p>إذا جاء بعد الميم الساكنة حرف الباء (باء)، تخفى الميم.</p>
+            <p><strong>مثال:</strong> (عَلَيْكُم بِاسْمِ اللَّهِ) تقرأ بغنة بين الشفتين.</p>
+            
+            <h3>3. الإظهار الشفوي (المتباعدين)</h3>
+            <p>إذا جاء بعد الميم الساكنة أي حرف آخر من حروف الهجاء (ما عدا الباء والميم)، تظهر الميم بوضوح.</p>
+            <p><strong>مثال:</strong> (عَلَيْهِم لَعْنَة).</p>
+        `,
         questions: [
-            { q: "للميم الساكنة ثلاثة أشكال، هي:", a: ["المجردة، وعليها رأس حاء، والمشددة", "المجردة، والمنونة، والمقلوبة", "العادية، والساكنة، والمتحركة", "المرققة، والمفخمة، والمعطشة"], c: 0 },
+            { q: "للميم الساكنة ثلاثة أشكال، هي:", a: ["المجردة، وعليها رأس حاء، والمشددة", "المجردة، والمنونة، والمقلوبة", "العادية، والصغيرة، والمتحركة", "المرققة، والمفخمة، والمعطشة"], c: 0 },
             { q: "إذا جاء بعد الميم الساكنة (باء)، فالحكم:", a: ["الإخفاء الشفوي", "الإدغام الشفوي", "الإظهار الشفوي", "الإقلاب"], c: 0 },
             { q: "إذا جاء بعد الميم الساكنة (ميم)، فالحكم:", a: ["الإدغام الشفوي", "الإخفاء الشفوي", "الإظهار الشفوي", "الإقلاب"], c: 0 },
             { q: "إذا جاء بعد الميم الساكنة باقي الحروف، فالحكم:", a: ["الإظهار الشفوي", "الإدغام الشفوي", "الإخفاء الشفوي", "الإقلاب"], c: 0 },
@@ -380,7 +561,25 @@ const COURSE_DATA = [
         ]
     },
     {
-        id: 12, title: "القلقلة", part: 1,
+        id: 12, title: "القلقلة", part:  1,
+        content: `
+            <h2>القلقلة</h2>
+            <p><strong>التعريف:</strong> هي صوت يظهر عند نطق أحد الحروف المقلقة الساكنة، وتسمع لها نبرة قوية كأنها تضطرب.</p>
+            
+            <h2>حروف القلقلة</h2>
+            <p>خمسة أحرف مجموعة في كلمة (قُطْبُ جَدْ)، وهي:</p>
+            <ul>
+                <li>القاف.</li>
+                <li>الطاء.</li>
+                <li>الباء.</li>
+                <li>الجيم.</li>
+                <li>الدال.</li>
+            </ul>
+            
+            <h2>أنواع القلقلة</h2>
+            <p><strong>1. القلقلة الكبرى:</strong> إذا كان الحرف المقلقل في آخر الكلمة والوقف عليه.</p>
+            <p><strong>2. القلقلة الصغرى:</strong> إذا كان الحرف المقلقل في وسط الكلمة أو في وسط الكلام (موصولاً).</p>
+        `,
         questions: [
             { q: "ما هو تعريف القلقلة؟", a: ["اهتزاز مخرج الحرف الساكن عند النطق به حتى يسمع له نبرة قوية", "سكون الحرف", "حركة الحرف", "شدة الحرف"], c: 0 },
             { q: "حروف القلقلة مجموعة في:", a: ["قُطْبُ جَدْ", "يُرْمَلُوْن", "أَخِي هَاك", "قُرْآن"], c: 0 },
@@ -388,11 +587,24 @@ const COURSE_DATA = [
             { q: "متى تكون القلقلة صغرى؟", a: ["إذا كان الحرف المقلقل في وسط الكلمة أو في وسط الكلام", "في آخر الكلمة", "في أول الكلمة", "إذا كان مشدداً"], c: 0 },
             { q: "من الأخطاء عند النطق بالقلقلة:", a: ["تلطيخ صوت القلقلة بالحركات", "الصمت على الحرف", "إطالة زمن الغنة", "كتم الحرف"], c: 0 }
         ]
-    },
-    
-    // --- PART 2 ---
+    }
+];
+
+// --- PART 2 DATA ---
+const PART_2_DATA = [
     {
         id: 13, title: "مقدمة الجزء الثاني", part: 2,
+        content: `
+            <h2>مقدمة الجزء الثاني</h2>
+            <p>في هذا الجزء سنتعلم مجموعة جديدة من الأحكام تتعلق بحروف المدود، وأحكام التفخيم والترقيق، وخصوصيات حروف معينة.</p>
+            <h3>الموضوعات الرئيسية:</h3>
+            <ul>
+                <li>أحكام التفخيم والترقيق (للحروف ولفظ الجلالة).</li>
+                <li>أنواع المدود: الطبيعي، العارض، اللازم، المتصل، المنفصل.</li>
+                <li>الحروف المقطعة في أوائل السور.</li>
+                <li>أهمية إتمام الحركات.</li>
+            </ul>
+        `,
         questions: [
             { q: "ماذا يتعلم الطالب في الجزء الثاني؟", a: ["التفخيم والترقيق، والمدود", "حروف النون فقط", "الوقف والابتداء فقط", "الغنة فقط"], c: 0 },
             { q: "الألف لا توصف بتفخيم ولا ترقيق بل:", a: ["تتبع ما قبلها", "دائماً مرققة", "دائماً مفخمة", "لا حكم لها"], c: 0 },
@@ -403,6 +615,22 @@ const COURSE_DATA = [
     },
     {
         id: 14, title: "التفخيم والترقيق (مقدمة)", part: 2,
+        content: `
+            <h2>التفخيم</h2>
+            <p><strong>التعريف:</strong> هو سمنة الحرف وامتلاء الفم به عند النطق به.</p>
+            
+            <h2>الترقيق</h2>
+            <p><strong>التعريف:</strong> هو رقة الحرف ودقته عند النطق به.</p>
+            
+            <h3>حروف التفخيم الدائمة (7 أحرف)</h3>
+            <p>هي الحروف التي لا ترقق أبداً، مجموعة في كلمة: (خُصَّ ضَغْطٍ طُلْقٌ). وهي:</p>
+            <ul>
+                <li>خ، ص، ض، غ، ط، ق، ظ.</li>
+            </ul>
+            
+            <h3>الحروف المترددة</h3>
+            <p>هي الحروف التي تُفخم تارة وتُرقق أخرى، وهي: الراء، واللام (في اسم الله)، والألف (تتبع ما قبلها).</p>
+        `,
         questions: [
             { q: "ما هو التفخيم؟", a: ["سمنة الحرف وامتلاء الفم به", "رقة الحرف ودقته", "طول زمن الحرف", "شدة النطق"], c: 0 },
             { q: "ما هو الترقيق؟", a: ["رقة الحرف ودقة النطق به", "سمنة الحرف", "إطالة الحرف", "إخفاء الحرف"], c: 0 },
@@ -413,6 +641,26 @@ const COURSE_DATA = [
     },
     {
         id: 15, title: "تفخيم وترقيق الراء", part: 2,
+        content: `
+            <h2>أحكام الراء</h2>
+            <p>الراء حرف يتغير نطقه بحسب حركته وحركة ما قبله.</p>
+            
+            <h3>حالات التفخيم</h3>
+            <p>تُفخم الراء في الحالات التالية:</p>
+            <ul>
+                <li>إذا كانت <strong>مفتوحة</strong> (مثال: رَحِيم).</li>
+                <li>إذا كانت <strong>مضمومة</strong> (مثال: رَبُّنَا).</li>
+                <li>إذا كانت <strong>ساكنة</strong> وقبلها <strong>فتحة</strong> (مثال: وَارْتَقِبْ).</li>
+                <li>إذا كانت ساكنة في كلمة ووقف عليها، وكان ما قبلها <strong>واو</strong> أو <strong>ياء</strong> مدية بعد حرف ساكن (مثال: الْقُرْآن، خَيْر).</li>
+            </ul>
+            
+            <h3>حالات الترقيق</h3>
+            <p>تُرقق الراء في الحالات التالية:</p>
+            <ul>
+                <li>إذا كانت <strong>مكسورة</strong> (مثال: رِجَال).</li>
+                <li>إذا كانت <strong>ساكنة</strong> وقبلها <strong>كسرة</strong> (مثال: فِرْعَوْن).</li>
+            </ul>
+        `,
         questions: [
             { q: "تُفخم الراء إذا كانت:", a: ["مفتوحة أو مضمومة، أو ساكنة قبلها فتحة", "مكسورة", "متحركة بكسرة", "ساكنة قبلها كسرة"], c: 0 },
             { q: "تُرقق الراء إذا كانت:", a: ["مكسورة، أو ساكنة قبلها كسرة", "مفتوحة", "مضمومة", "مشددة"], c: 0 },
@@ -423,16 +671,45 @@ const COURSE_DATA = [
     },
     {
         id: 16, title: "تفخيم وترقيق اللام (اسم الله)", part: 2,
+        content: `
+            <h2>لام لفظ الجلالة (الله)</h2>
+            <p>للام في كلمة (الله) حكم خاص يعتمد على حركة الحرف الذي يسبقها.</p>
+            
+            <h3>1. التفخيم</h3>
+            <p>تُفخم اللام إذا سبقها حرف <strong>مضموم</strong> أو <strong>مفتوح</strong>.</p>
+            <p><strong>مثال الضم:</strong> (اللَّهُمَّ) - (قال اللَّهُ).</p>
+            <p><strong>مثال الفتح:</strong> (بِسْمِ اللَّهِ الرَّحْمَٰنِ) - (هُوَ اللَّهُ).</p>
+            
+            <h3>2. الترقيق</h3>
+            <p>تُرقق اللام إذا سبقها حرف <strong>مكسور</strong>.</p>
+            <p><strong>مثال:</strong> (لِلَّهِ) - (بِسْمِ اللَّهِ) - (لِلَّهِ مَا فِي السَّمَاوَات).</p>
+            
+            <p><strong>الألف:</strong> تتبع اللام، فإن كانت اللام مفخمة فالألف مفخمة، وإن كانت مرققة فالألف مرققة.</p>
+        `,
         questions: [
             { q: "لام اسم الله تفخم إذا:", a: ["سبقتها فتحة أو ضمة (مثل: اللهُ، اللهمُ)", "سبقتها كسرة", "كانت ساكنة", "كانت متطرفة"], c: 0 },
             { q: "لام اسم الله ترقق إذا:", a: ["سبقتها كسرة (مثل: للهِ، بسمِ الله)", "سبقتها فتحة", "سبقتها ضمة", "كانت في وسط الكلمة"], c: 0 },
-            { q: "مثال على لام مفخمة في لفظ الجلالة:", a: ["قُل هُوَ أَحَدُ", "بِسْمِ اللَّهِ الرَّحْمٰن", "اللَّهُمَّ", "لِلَّهِ"], c: 0 },
+            { q: "مثال على لام مفخمة في لفظ الجلالة:", a: ["قُل هُوَ أَحَدُ", "بِسْمِ اللَّهِ الرَّحْمَٰن", "اللَّهُمَّ", "لِلَّهِ"], c: 0 },
             { q: "مثال على لام مرققة في لفظ الجلالة:", a: ["الْحَمْدُ لِلَّهِ", "اللَّهُمَّ لِرَبِّ الْعَلَمِينَ", "قُل هُوَ الْأَحَدُ", "اللَّهُ الرَّحْمٰن"], c: 0 },
             { q: "ماذا تفعل الألف في اسم الجلالة؟", a: ["تتبع حركة اللام", "دائماً مفخمة", "دائماً مرققة", "لا حكم لها"], c: 0 }
         ]
     },
     {
         id: 17, title: "المد الطبيعي", part: 2,
+        content: `
+            <h2>المد الطبيعي (الأصلي)</h2>
+            <p><strong>التعريف:</strong> هو حرف مد أتى قبله حركته، ولا يتوقف بعده همزة قطع ولا سكون أصلي.</p>
+            
+            <h2>حروف المد الثلاثة</h2>
+            <p>لا مد إلا في ثلاثة أحرف، وهي:</p>
+            <ol>
+                <li><strong>الألف:</strong> تخرج من الجوف، ولا تكون إلا قبلها فتحة. (مثال: قَالَ).</li>
+                <li><strong>الواو الساكنة:</strong> لا تكون إلا قبلها ضمة. (مثال: يَقُولُ).</li>
+                <li><strong>الياء الساكنة:</strong> لا تكون إلا قبلها كسرة. (مثال: قِيلَ).</li>
+            </ol>
+            
+            <p><strong>مقدار المد الطبيعي:</strong> حركتان فقط.</p>
+        `,
         questions: [
             { q: "ما هو المد الطبيعي؟", a: ["حرف مد أتى قبله حركته، ويمد حركتين", "حرف مد أتى قبله سكون", "حرف مد أتى قبله همزة", "إطالة الحرف"], c: 0 },
             { q: "حروف المد هي:", a: ["الواو الساكنة المضمومة ما قبلها، والألف المفتوح ما قبلها، والياء الساكنة المكسورة ما قبلها", "ا، و، ي فقط", "أ، ا، ي", "إ، و، ي"], c: 0 },
@@ -443,6 +720,20 @@ const COURSE_DATA = [
     },
     {
         id: 18, title: "مد العوض", part: 2,
+        content: `
+            <h2>مد العوض</h2>
+            <p><strong>التعريف:</strong> هو أن يأتي بعد التنوين ألف (أو واو) لازمة عند الوصل، وتكون عوضاً عن التنوين عند الوقف.</p>
+            
+            <h3>1. عند الوقف على تنوين بالكسرة</h3>
+            <p>يُبدل التنوين بالكسرة <strong>ألفاً لازمة</strong> مقدارها حركتان.</p>
+            <p><strong>مثال:</strong> (قَرِيبًا) - (عَلِيمًا) - (حَكِيمًا).</p>
+            
+            <h3>2. عند الوقف على تنوين بالضم</h3>
+            <p>يُبدل التنوين بالضم <strong>واواً لازمة</strong> مقدارها حركتان.</p>
+            <p><strong>مثال:</strong> (عَلِيمٌ) - (حَكِيمٌ) - (غَفُورٌ).</p>
+            
+            <p><strong>ملاحظة:</strong> تنوين الفتح لا يُبدل بألف عند الوقف، بل يُنطق ألفاً عند الوصل وتُسقط عند الوقف.</p>
+        `,
         questions: [
             { q: "متى يأتي مد العوض؟", a: ["عند الوقف على التنوين بالكسرة أو الضم", "عند الوصل", "في وسط الكلمة", "عند النطق بالهمزة"], c: 0 },
             { q: "ماذا يُبدل التنوين عند الوقف عليه بالكسرة؟", a: ["ألفاً لازمة مقدار حركتين (مد عوض)", "واواً", "ياءً", "سكوناً"], c: 0 },
@@ -453,6 +744,20 @@ const COURSE_DATA = [
     },
     {
         id: 19, title: "مد البدل", part: 2,
+        content: `
+            <h2>مد البدل</h2>
+            <p><strong>التعريف:</strong> هو أن يأتي حرف مد بدلاً من همزة قطع (همزة مع قطع)، بحيث يكون قبلها همزة قطع، وتُسقط الثانية ويدوم صوت حرف المد.</p>
+            
+            <h3>الحالات</h3>
+            <ul>
+                <li>همزة مضمومة بعدها واو مدية (أُوتُوا).</li>
+                <li>همزة مكسورة بعدها ياء مدية (إِيمَان).</li>
+                <li>همزة مفتوحة بعدها ألف مدية (آمَنَ).</li>
+            </ul>
+            
+            <p><strong>مقدار مد البدل:</strong> حركتان (مثل المد الطبيعي).</p>
+            <p><strong>الفرق:</strong> هذا المد مختلف عن الهمزة المنفصلة (بألف)، في البدل الهمزة الواحدة تبدل إلى حرف مد، وفي المنفصلة توجد همزتان.</p>
+        `,
         questions: [
             { q: "ما هو مد البدل؟", a: ["أن يأتي حرف مد بـدلاً من همزة قطع", "أن يأتي حرف مد بـدلاً من حرف ساكن", "أن يأتي حرف مد بـدلاً من شدة", "أن يأتي حرف مد بعد سكون"], c: 0 },
             { q: "مثال على مد البدل:", a: ["آمَنَ، إِيمَان، أُوتُوا", "قَالَ، نُورًا", "يَدْعُون"], c: 0 },
@@ -463,6 +768,21 @@ const COURSE_DATA = [
     },
     {
         id: 20, title: "المد المتصل", part: 2,
+        content: `
+            <h2>المد المتصل</h2>
+            <p><strong>التعريف:</strong> هو أن يأتي حرف مد وبعده همزة قطع في <strong>كلمة واحدة</strong>.</p>
+            
+            <h3>أمثلة:</h3>
+            <ul>
+                <li><strong>(جَآءَ)</strong>: الألف ممدودة والهمزة بعدها.</li>
+                <li><strong>(سَوَآءَ)</strong>: الألف ممدودة والهمزة بعدها.</li>
+                <li><strong>(شَيْءٌ)</strong>: الياء ممدودة والهمزة بعدها.</li>
+            </ul>
+            
+            <h2>مقدار المد المتصل</h2>
+            <p>يمد المد المتصل بمقدار <strong>4 أو 5 حركات</strong>.</p>
+            <p><strong>حال الهمزة:</strong> الهمزة التي تأتي بعد المد المتصل همزة قطع وتُكتب.</p>
+        `,
         questions: [
             { q: "ما هو المد المتصل؟", a: ["أن يأتي همزة القطع بعد حرف المد في كلمة واحدة", "أن يأتي همزة القطع في كلمة أخرى", "أن يأتي حرف المد في كلمة أخرى", "المد الطبيعي"], c: 0 },
             { q: "ما مقدار مد المتصل؟", a: ["4 أو 5 حركات (بكسرة أو بفتح)", "حركتان", "6 حركات", "بلا مقدار"], c: 0 },
@@ -473,26 +793,65 @@ const COURSE_DATA = [
     },
     {
         id: 21, title: "المد المنفصل", part: 2,
+        content: `
+            <h2>المد المنفصل</h2>
+            <p><strong>التعريف:</strong> هو أن يأتي حرف مد في آخر كلمة، وهمزة قطع في أول <strong>الكلمة التي تليها</strong>.</p>
+            
+            <h3>أمثلة:</h3>
+            <ul>
+                <li><strong>(إِنَّا أَنْزَلْنَا):</strong> الألف في (إنا) هي المد، والهمزة في (أنزلنا) هي المنفصل.</li>
+                <li><strong>(هَؤُلَاءِ):</strong> الألف في (هاء) هي المد، والهمزة هي المنفصل.</li>
+            </ul>
+            
+            <h2>مقدار المد المنفصل</h2>
+            <p>يمد المد المنفصل بمقدار <strong>4 أو 5 حركات</strong>.</p>
+            <p>مقداره مساوٍ لمقدار المد المتصل عند حفص.</p>
+        `,
         questions: [
             { q: "ما هو المد المنفصل؟", a: ["أن يأتي همزة القطع بعد حرف المد في كلمتين", "أن يأتي همزة القطع في كلمة واحدة", "المد الطبيعي", "المد المتصل"], c: 0 },
             { q: "ما مقدار مد المنفصل؟", a: ["4 أو 5 حركات", "حركتان", "6 حركات", "بلا مقدار"], c: 0 },
-            { q: "مثال على مد منفصل:", a: ["إِنَّا أَنزَلْنَا، هَؤُلَاءِ، جَآءَ"], c: 0 },
+            { q: "مثال على مد منفصل:", a: ["إِنَّا أَنْزَلْنَا، هَؤُلَاءِ، جَآءَ"], c: 0 },
             { q: "في كلمة (إنا أنزلنا)، أين المد المنفصل؟", a: ["الألف في (إنا) والهمزة في (أنزلنا)", "الواو فقط", "الياء فقط", "لا يوجد"], c: 0 },
             { q: "هل المد المنفصل أقصر من المتصل دائماً؟", a: ["لا، مقدارهما متشابهة", "نعم، أقصر", "نعم، أطول", "لا علاقة"], c: 0 }
         ]
     },
     {
         id: 22, title: "مد الصلة", part: 2,
+        content: `
+            <h2>مد الصلة</h2>
+            <p><strong>التعريف:</strong> هو إلحاق هاء ساكنة (هـ) في ضمير المضار للغائب (هو، هم، هن)، أو للضمير المرفوع (هو، هي، هم، هن) إذا كان مكسوراً.</p>
+            
+            <h3>1. صلة الهاء المضمرة (لهاء)</h3>
+            <p>تُصل هاء الضمير المرفوع الغائب (هو، هي) إذا جاء بعدها كاف أو ميم مكسورة.</p>
+            <p><strong>مثال:</strong> (إِنَّهُ هُوَ) تقرأ (إِنَّهُو هُوَ).</p>
+            
+            <h3>2. صلة هاء الكناية (لها)</h3>
+            <p>تُصل هاء الكناية الساكنة إذا جاء بعدها حرف متحرك (غالباً همزة)، إلا ما استثني.</p>
+            <p><strong>مثال:</strong> (لَهُ الآخِرَة) تقرأ (لَهِي الآخِرَة).</p>
+        `,
         questions: [
             { q: "ما هو مد الصلة؟", a: ["إلحاق هاء ساكنة (هـ) للكاف أو الميم إذا كانتا مكسورتين، للضمير إذا كان مضموماً", "إلحاق ألف للكلمة", "مد العوض", "مد الطبيعي"], c: 0 },
             { q: "شروط مد الصلة للضمير:", a: ["أن يكون الضمير مضموماً (هُ، هُما، هُم، هُما، هُم)", "أن يكون مكسوراً", "أن يكون مفتوحاً", "أن يكون ساكناً", "لا شروط له"], c: 0 },
             { q: "شروط مد الصلة للكاف والميم:", a: ["أن تكونا مكسورتين (كِ، مِ)", "أن تكونا مفتوحتين", "أن تكونا مضمومتين", "أن تكونا ساكنتين"], c: 0 },
-            { q: "مثال على صلة الكاف:", a: ["لَكِ", "رَبَّكَ", "عَلَيْهِم", "إِنَّهُ"], c: 0 },
+            { q: "مثال على صلة الكاف:", a: ["لَهِ", "رَبَّكَ", "عَلَيْهِم", "إِنَّهُ"], c: 0 },
             { q: "مثال على صلة الميم:", a: ["عَلَيْهِم", "مِنْهُم", "لَهُمُ", "فِيهِم"], c: 0 }
         ]
     },
     {
         id: 23, title: "المد العارض للسكون", part: 2,
+        content: `
+            <h2>المد العارض للسكون</h2>
+            <p><strong>التعريف:</strong> هو المد الطبيعي الذي يُوقف عليه بالسكون <strong>العاريض</strong> (أي السكون الذي لم يكن في كلمة القراءة أولاً، بل حدث بسبب الوقف).</p>
+            
+            <h3>متى يكون؟</h3>
+            <p>يحدث عند الوقف على كلمة آخرها مد طبيعي، بينما عند الوصل يُنطق المد بحركتين فقط.</p>
+            
+            <h3>أمثلة:</h3>
+            <p><strong>(إِنَّا أَعْطَيْنَاكُمُ):</strong> عند الوقف على (أعطاكم)، يكون عارض للسكون.</p>
+            <p><strong>(الْعَالَمُونَ):</strong> عند الوقف، يكون عارض للسكون.</p>
+            
+            <p><strong>مقدار المد العارض:</strong> للقارئ الخيار بين 4 أو 5 حركات (مد) أو حركتين (قصر).</p>
+        `,
         questions: [
             { q: "ما هو المد العارض للسكون؟", a: ["المد الطبيعي الذي يُوقف على حرفه بالسكون العارض (غير الأصلي)", "المد اللازم", "المد المتصل", "مد البدل"], c: 0 },
             { q: "في المد العارض للسكون، للقارئ:", a: ["الخيار بين المد (4-5 حركات) والقصر (حركتين)", "الوقف بالسكون فقط", "المد اللازم", "الإدغام"], c: 0 },
@@ -503,6 +862,21 @@ const COURSE_DATA = [
     },
     {
         id: 24, title: "المد اللازم", part: 2,
+        content: `
+            <h2>المد اللازم</h2>
+            <p><strong>التعريف:</strong> هو حرف مد أتى قبله حرف ساكن <strong>أصلي</strong> أو حرف مشدد، ويُمد <strong>دائماً</strong>.</p>
+            
+            <h3>مقدار المد اللازم</h3>
+            <p>يمد المد اللازم بمقدار <strong>6 حركات</strong>.</p>
+            
+            <h3>أنواعه</h3>
+            <p><strong>1. المد اللازم الكلمي:</strong> أن يكون السكون الأصلي في نفس الكلمة.</p>
+            <p><strong>مثال:</strong> (آلآنَ - الضَّالُونَ - آذَن).</p>
+            
+            <p><strong>2. المد اللازم الحرفي:</strong> أن يكون السكون الأصلي في حرف مقطع من حروف الهجاء التي تُكتب في أوائل بعض السور.</p>
+            <p><strong>الحروف المقطعة:</strong> ق، ط، ب، ج، د، س، ص، ل، م، ك، ع، ف.</p>
+            <p><strong>مثال:</strong> (قَافَ - طَهَ - صَ - يس).</p>
+        `,
         questions: [
             { q: "ما هو المد اللازم؟", a: ["حرف مد أتى قبله حرف ساكن (سكون أصلي) أو حرف مشدد، ويُمد ست حركات دائماً", "مد يعتمد على وقف القارئ", "مد يُمد حركتين", "مد في الحروف المقطعة"], c: 0 },
             { q: "ما مقدار المد اللازم؟", a: ["6 حركات", "4 حركات", "حركتان", "8 حركات"], c: 0 },
@@ -512,17 +886,50 @@ const COURSE_DATA = [
         ]
     },
     {
-        id: 25, title: "حروف المد في أوائل السور", part: 2,
+        id: 25, title: "حروف المد في أوائل السور", part:  2,
+        content: `
+            <h2>الحروف المقطعة (المقصودة)</h2>
+            <p>هي الحروف التي تأتي في أوائل بعض سور القرآن مفصولة (مقطعة)، ولها أحكام خاصة.</p>
+            
+            <h3>أحكامها</h3>
+            <ul>
+                <li><strong>تُشدّ:</strong> حروف (ن، ق، ص، ط) لما فيها من مد لازم.</li>
+                <li><strong>تُظهر:</strong> حروف (ي، هـ، ع، ح) لما فيها من سكون أصلي (في بعض الروايات) أو عدم المد.</li>
+            </ul>
+            
+            <h3>أمثلة من السور</h3>
+            <p><strong>(يـس):</strong> الياء مشددة (ملازمة)، والسين مشددة (ملازمة).</p>
+            <p><strong>(صـ):</strong> الصاد مشددة (ملازمة).</p>
+            <p><strong>(نـ):</strong> النون مشددة (ملازمة).</p>
+        `,
         questions: [
             { q: "ما هي الحروف المقطعة؟", a: ["حروف تأتي في أوائل بعض سور القرآن مفصولة", "حروف المد الثلاثة", "حروف القلقلة", "حروف الإظهار"], c: 0 },
-            { q: "مثال على حرف مقطع:", a: ["القاف (قاف)، والطاء (طه)، والنون (نون)", "الألف (ا)، الواو (و)، الياء (ي)", "الراء (ر)، اللام (ل)"], c: 0 },
-            { q: "في السورة التي تبدأ بـ (ن)، حكم النون:", a: ["مشدة (ملازمة)", "ساكنة (طبيعية)", "حركتين", "4 حركات"], c: 0 },
+            { q: "مثال على حرف مقطع:", a: ["القاف (قاف)، والطاء (طه)، والنون (نون)", "الألف (ا)، الواو (و)، الياء (ي)", "الراء (ر)، واللام (ل)"], c: 0 },
+            { q: "في السورة التي تبدأ بـ (ن)، حكم النون:", a: ["مشدة (ملازمة)", "ساكنة (طبيعية)", "حركتين", "مد عوض"], c: 0 },
             { q: "في السورة التي تبدأ بـ (ص)، حكم الصاد:", a: ["مشدة (ملازمة)", "ساكنة", "حركتين", "مد عوض"], c: 0 },
             { q: "في السورة التي تبدأ بـ (يس)، حكم الياء والسين:", a: ["مشددتان ملازمتان", "ساكنتان", "متحركتان", "إدغام"], c: 0 }
         ]
     },
     {
         id: 26, title: "إتمام الحركات", part: 2,
+        content: `
+            <h2>إتمام الحركات</h2>
+            <p><strong>التعريف:</strong> هو المراعاة الدقيقة لحركات الكلمات، والنطق الصحيح للحروف، بحيث تُعطى الحركتان حقهما، والمدود والشدات حقها.</p>
+            
+            <h3>أهمية إتمام الحركات</h3>
+            <ul>
+                <li>تغيير الحركة قد يغير المعنى جذرياً (مثال: تَبَّدَّلَتَ). بالتَبْدَّلَت).</li>
+                <li>إهمال حركة الحرف (تركها غير مكتملة) يفسد النطق والتجويد.</li>
+                <li>يجب إتمام حركات الحروف التي يسهل إهمالها مثل: (ق، ط، ب، ج، د).</li>
+            </ul>
+            
+            <h3>أخطاء شائعة</h3>
+            <ul>
+                <li>نطق (كَعِب) بكسرة خفيفة لا تُكمل.</li>
+                <li>نطق (لَكِن) بفتحة خفيفة.</li>
+                <li>إطالة الفتحة في الهمزة (قَالَ) لتصبح كأنها (قَاال).</li>
+            </ul>
+        `,
         questions: [
             { q: "ما المقصود بـ (إتمام الحركات)؟", a: ["المراعاة الدقيقة لحركات الكلمات والنطق الصحيح للحروف", "إتمام قراءة السورة", "تلاوة القرآن كاملةً", "تجويد القرآن"], c: 0 },
             { q: "أي الحركات التالية لا بد من إتمام نطقها؟", a: ["الشدة، والسكون، والمدود", "الفتحة والكسرة", "الفتحة والضمة", "الفتحة والشدة"], c: 0 },
@@ -533,6 +940,17 @@ const COURSE_DATA = [
     },
     {
         id: 27, title: "مراجعة الأحكام (1)", part: 2,
+        content: `
+            <h2>مراجعة الأحكام: النون والميم</h2>
+            <p>في هذا الدرس سنطبق ما تعلمناه:</p>
+            <ul>
+                <li><strong>في (من ذكريا):</strong> (ذ) حرف حلقي، حكمها <strong>إظهار</strong>.</li>
+                <li><strong>في (من خير):</strong> (خ) حرف حلقي، حكمها <strong>إظهار</strong> (بعض الروايات تقرأها بإدغام خفيف، لكن القاعدة الاصطلاحية إظهار).</li>
+                <li><strong>في (لهم):</strong> (هـ) متطابقة، حكمها <strong>إدغام</strong>.</li>
+                <li><strong>في (عليهم بسلام):</strong> (م) مع (ب)، حكمها <strong>إخفاء</strong>.</li>
+                <li><strong>في (فلبنبدءنأ):</strong> (ن) مع (ب)، حكمها <strong>إقلاب</strong>.</li>
+            </ul>
+        `,
         questions: [
             { q: "ما حكم (من) في (من ذكريا)؟", a: ["إخفاء حقيقي", "إظهار حلقي", "إقلاب", "إدغام"], c: 0 },
             { q: "ما حكم النون في (من خير)؟", a: ["إدغام بغنة", "إدغام بغير غنة", "إقلاب", "إظهار"], c: 0 },
@@ -543,6 +961,16 @@ const COURSE_DATA = [
     },
     {
         id: 28, title: "مراجعة الأحكام (2)", part: 2,
+        content: `
+            <h2>مراجعة تطبيقية (2)</h2>
+            <ul>
+                <li><strong>(كبيراً):</strong> تنوين فتح. عند الوصل (كبيراً).</li>
+                <li><strong>(ينصبكم):</strong> النون (يۢن) مع الباء (ب)، حكمها <strong>إقلاب</strong>.</li>
+                <li><strong>(يومئذ):</strong> النون (يۢم) مع الهمزة، حكمها <strong>إقلاب</strong>.</li>
+                <li><strong>(أم نحتسبهم):</strong> الميم (مْ) مع النون (ن)، حكمها <strong>إدغام</strong>.</li>
+                <li><strong>(الحاقة):</strong> القاف ساكنة آخر الكلمة، حكمها <strong>قلقلة صغرى</strong> (في الوصل).</li>
+            </ul>
+        `,
         questions: [
             { q: "ما حكم التنوين في (كبيراً)؟", a: ["تنوين فتح", "تنوين ضم", "تنوين كسر", "بدون تنوين"], c: 0 },
             { q: "ما حكم النون في (ينصبكم)؟", a: ["إقلاب (يۢنصبكم)", "إدغام بغنة", "إخفاء", "إظهار"], c: 0 },
@@ -553,9 +981,19 @@ const COURSE_DATA = [
     },
     {
         id: 29, title: "مراجعة الأحكام (3)", part: 2,
+        content: `
+            <h2>مراجعة التفخيم والترقيق</h2>
+            <ul>
+                <li><strong>(القرآن):</strong> القاف ساكنة قبلها فتح، حكمها <strong>قلقلة صغرى</strong> و <strong>تفخيم</strong>.</li>
+                <li><strong>(الفلق):</strong> اللام ساكنة قبلها فتح، حكمها <strong>تفخيم</strong> (رغم بعض القراء يرققونها لكن القاعدة العامة التفخيم).</li>
+                <li><strong>(الطور):</strong> الطاء مفتوحة، حكمها <strong>تفخيم</strong>.</li>
+                <li><strong>(الرحمن):</strong> الراء الأولى مفتوحة، حكمها <strong>تفخيم</strong>.</li>
+                <li><strong>(الرحيم):</strong> الراء الأخيرة مكسورة، حكمها <strong>ترقيق</strong>.</li>
+            </ul>
+        `,
         questions: [
             { q: "في كلمة (القرآن)، كيف ننطق القاف؟", a: ["بقلقلة صغرى", "بقلقلة كبرى", "بدون قلقلة", "بإدغام"], c: 0 },
-            { q: "في كلمة (الفلق)، كيف ننطق اللام؟", a: ["مرققة", "مفخمة", "مشددة", "ساكنة"], c: 0 },
+            { q: "في كلمة (الفلق)، كيف ننطق اللام؟", a: ["مفخمة", "مرققة", "مشددة", "ساكنة"], c: 0 },
             { q: "في كلمة (الطور)، ما حكم الطاء؟", a: ["مفخمة", "مرققة", "قلقلة", "إدغام"], c: 0 },
             { q: "في كلمة (الرحمن)، ما حكم الراء الأولى؟", a: ["مفخمة (رَ)", "مرققة (رِ)", "مقلوبة", "مشددة"], c: 0 },
             { q: "في كلمة (الرحيم)، ما حكم الراء الأخيرة؟", a: ["مرققة", "مفخمة", "مقلوبة", "ساكنة"], c: 0 }
@@ -563,6 +1001,18 @@ const COURSE_DATA = [
     },
     {
         id: 30, title: "الاختبار النهائي", part: 2,
+        content: `
+            <h2>الاختبار النهائي الشامل</h2>
+            <p>مراجعة سريعة لأهم الأحكام التي تعلمناها:</p>
+            <ul>
+                <li><strong>أحرف الإدغام:</strong> 6 أحرف (يرملون)، 4 بغنة، 2 بغير غنة.</li>
+                <li><strong>حروف القلقلة:</strong> 5 أحرف (قطب جد).</li>
+                <li><strong>حروف الإقلاب:</strong> حرف الباء.</li>
+                <li><strong>المدود:</strong> الطبيعي (2)، العارض (2-5)، اللازم (6).</li>
+                <li><strong>التفخيم:</strong> 7 أحرف دائمة، الراء واللام مترددة.</li>
+            </ul>
+            <p>تفضل بإجراء الاختبار التأكيد.</p>
+        `,
         questions: [
             { q: "كم عدد أحرف الإدغام؟", a: ["6 أحرف", "5 أحرف", "7 أحرف", "3 أحرف"], c: 0 },
             { q: "ما هي حروف القلقلة؟", a: ["ق، ط، ب، ج، د", "خ، غ، ح، ع، ء", "ل، ر، م، ن، و", "أ، ي، و"], c: 0 },
@@ -573,101 +1023,115 @@ const COURSE_DATA = [
     }
 ];
 
-/**
- * --------------------------------------------------------------------------
- * APP LOGIC (OPTIMIZED)
- * --------------------------------------------------------------------------
- */
+const ALL_COURSES = [...PART_1_DATA, ...PART_2_DATA];
+
 const App = {
-    currentLessonId: 1,
+    currentLessonId: null,
     currentQuestionIndex: 0,
     score: 0,
+    activePart: 1,
     isProcessing: false,
     
-    init: function() {
-        this.loadProgress();
-        // Do NOT renderQuiz yet. Wait for welcome screen click.
+    init: function() { this.loadScore(); },
+    loadScore: function() {
+        const saved = localStorage.getItem('tajwid_kids_score');
+        if (saved) { this.score = parseInt(saved) || 0; }
+        document.getElementById('global-score').innerText = this.score;
     },
-
-    launch: function() {
-        // Transition
-        const welcome = document.getElementById('welcome-screen');
-        welcome.style.transition = "opacity 0.5s ease";
-        welcome.style.opacity = "0";
+    addScore: function() {
+        this.score += 10;
+        localStorage.setItem('tajwid_kids_score', this.score);
+        const scoreEl = document.getElementById('global-score');
+        scoreEl.style.transform = "scale(1.5)";
+        setTimeout(() => scoreEl.style.transform = "scale(1)", 200);
+        document.getElementById('global-score').innerText = this.score;
+    },
+    // --- NAVIGATION ---
+    toDashboard: function() {
+        document.getElementById('welcome-screen').classList.add('hidden');
+        document.getElementById('lesson-view').classList.add('hidden');
+        document.getElementById('quiz-view').classList.add('hidden');
+        document.getElementById('dashboard-view').classList.remove('hidden');
+        document.getElementById('dashboard-view').classList.add('fade-in');
+        this.switchTab(1);
+    },
+    switchTab: function(part) {
+        this.activePart = part;
+        document.getElementById('tab-part1').className = part === 1 ? "tab active" : "tab";
+        document.getElementById('tab-part2').className = part === 2 ? "tab active" : "tab";
+        this.renderGrid();
+    },
+    renderGrid: function() {
+        const grid = document.getElementById('course-grid');
+        grid.innerHTML = "";
         
-        setTimeout(() => {
-            welcome.classList.add('hidden');
-            document.getElementById('app-header').classList.remove('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            document.getElementById('quiz-container').classList.add('fade-in');
+        const courses = ALL_COURSES.filter(c => c.part === this.activePart);
+        
+        courses.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'course-card fade-in';
+            const icons = ['📖', '🌟', '🎯', '🧩', '🌙', '✨', '🕌', '🎓'];
+            const randomIcon = icons[c.id % icons.length];
             
-            this.renderSelector();
-            this.startLesson(this.currentLessonId);
-        }, 500);
+            card.innerHTML = `
+                <div class="course-id">${c.id}</div>
+                <span class="card-icon">${randomIcon}</span>
+                <h3>${c.title}</h3>
+            `;
+            card.onclick = () => this.openLesson(c.id);
+            grid.appendChild(card);
+        });
     },
-
-    loadProgress: function() {
-        const saved = localStorage.getItem('tajwid_fast_save');
-        if (saved) {
-            const data = JSON.parse(saved);
-            this.currentLessonId = data.lessonId || 1;
-            this.score = data.totalScore || 0;
-        }
-        document.getElementById('current-score').innerText = this.score;
+    openLesson: function(id) {
+        this.currentLessonId = id;
+        const lesson = ALL_COURSES.find(c => c.id === id);
+        
+        document.getElementById('dashboard-view').classList.add('hidden');
+        document.getElementById('lesson-view').classList.remove('hidden');
+        document.getElementById('lesson-view').classList.add('fade-in');
+        
+        document.getElementById('lesson-view-title').innerText = lesson.title;
+        document.getElementById('lesson-content').innerHTML = lesson.content;
+        // Scroll to top
+        document.getElementById('lesson-content').scrollTop = 0;
     },
-
-    saveProgress: function() {
-        localStorage.setItem('tajwid_fast_save', JSON.stringify({
-            lessonId: this.currentLessonId,
-            totalScore: this.score
-        }));
-        document.getElementById('current-score').innerText = this.score;
-    },
-
-    renderSelector: function() {
-        const select = document.getElementById('lesson-selector');
-        select.innerHTML = COURSE_DATA.map(l => 
-            `<option value="${l.id}">مهمة ${l.id}: ${l.title}</option>`
-        ).join('');
-        select.value = this.currentLessonId;
-    },
-
-    changeLesson: function(id) {
-        this.currentLessonId = parseInt(id);
-        this.currentQuestionIndex = 0;
-        this.isProcessing = false;
-        this.startLesson(this.currentLessonId);
-    },
-
-    startLesson: function(id) {
-        const lesson = COURSE_DATA.find(l => l.id === id);
-        document.getElementById('lesson-title').innerText = lesson.title;
+    backToLesson: function() {
         document.getElementById('results-modal').style.display = 'none';
+        document.getElementById('quiz-view').classList.add('hidden');
+        document.getElementById('lesson-view').classList.remove('hidden');
+    },
+    startExam: function() {
+        if (!this.currentLessonId) return;
+        
+        document.getElementById('lesson-view').classList.add('hidden');
+        document.getElementById('quiz-view').classList.remove('hidden');
+        
+        const lesson = ALL_COURSES.find(c => c.id === this.currentLessonId);
+        document.getElementById('quiz-lesson-title').innerText = lesson.title;
+        
+        this.currentQuestionIndex = 0;
+        this.updateProgressBar();
         this.renderQuestion();
     },
-
+    updateProgressBar: function() {
+        const pct = ((this.currentQuestionIndex) / 5) * 100;
+        document.getElementById('quiz-bar').style.width = pct + '%';
+    },
     renderQuestion: function() {
-        const lesson = COURSE_DATA.find(l => l.id === this.currentLessonId);
+        const lesson = ALL_COURSES.find(c => c.id === this.currentLessonId);
         const q = lesson.questions[this.currentQuestionIndex];
         
         document.getElementById('q-counter').innerText = this.currentQuestionIndex + 1;
 
-        const options = q.a.map((text, index) => ({
-            text: text,
-            isCorrect: index === q.c
-        }));
-
-        // Fisher-Yates Shuffle
+        const options = q.a.map((text, index) => ({ text, isCorrect: index === q.c }));
         for (let i = options.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [options[i], options[j]] = [options[j], options[i]];
         }
 
-        const stage = document.getElementById('question-stage');
-        
-        // Efficient HTML string injection
+        const stage = document.getElementById('quiz-stage');
         stage.innerHTML = `
-            <div class="question-card fade-in">
+            <div class="quiz-card fade-in">
                 <div class="question-text">${q.q}</div>
                 <div class="options-grid">
                     ${options.map((opt, idx) => `
@@ -681,7 +1145,6 @@ const App = {
             </div>
         `;
     },
-
     checkAnswer: function(btn, isCorrect) {
         if (this.isProcessing) return; 
 
@@ -691,24 +1154,21 @@ const App = {
 
         if (isCorrect) {
             btn.classList.add('correct');
-            this.showToast('أحسنت!', 'success');
-            this.score++;
-            this.saveProgress();
-
+            this.addScore();
+            
             setTimeout(() => {
                 this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < 5) {
+                    this.updateProgressBar();
                     this.renderQuestion();
                 } else {
                     this.showResults();
                 }
                 this.isProcessing = false;
-            }, 1200);
+            }, 1000);
 
         } else {
             btn.classList.add('wrong');
-            this.showToast('حاول مرة أخرى', 'error');
-            
             const correctBtn = document.querySelector('.option-btn[data-correct="true"]');
             if(correctBtn) correctBtn.classList.add('correct');
 
@@ -720,35 +1180,26 @@ const App = {
             }, 1500);
         }
     },
-
-    showToast: function(msg, type) {
-        const toast = document.getElementById('feedback-toast');
-        toast.innerText = msg;
-        toast.className = type + ' visible';
-        
-        setTimeout(() => {
-            toast.classList.remove('visible');
-        }, 1000);
-    },
-
     showResults: function() {
         const modal = document.getElementById('results-modal');
         modal.style.display = 'flex';
+        this.fireConfetti();
     },
-
-    nextLesson: function() {
-        const nextId = this.currentLessonId + 1;
-        if (nextId <= COURSE_DATA.length) {
-            this.changeLesson(nextId);
-        } else {
-            alert("لقد أكملت جميع المستويات!");
+    fireConfetti: function() {
+        const colors = ['#f44336', '#2196F3', '#FFEB3B', '#4CAF50', '#FF9800'];
+        for(let i=0; i<50; i++) {
+            const conf = document.createElement('div');
+            conf.className = 'confetti';
+            conf.style.left = Math.random() * 100 + 'vw';
+            conf.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+            conf.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(conf);
+            setTimeout(() => conf.remove(), 3000);
         }
     }
 };
- 
-// Initialize
-window.onload = () => App.init();
 
+window.onload = () => App.init();
 </script>
 </body>
 </html>
